@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type ="text/css">
+        div.square {display: inline-block; height: 100px; width: 100px;
+             margin: 5px;border: 1px solid #000;
+             font-size:75px; text-align: center; line-height: 100px;}
+        div.square:hover {background-color:aqua}
+        div.container {display: flex; max-width: 340px;flex-wrap: wrap;
+             margin-left:auto; margin-right:auto;}
+        h1#title {text-align: center; font-size: 50px}
+        div.info {display: block; width: 340px; height: 40px ;text-align: center;
+                 margin-left:auto; margin-right:auto; border: 3px solid red; 
+                 font-size: 30px; padding: 20px 0px; margin-top: 20px; margin-bottom: 20px;}
+        div#buttonContainer {text-align: center}
+        input#clear{font-size: 50px}
+    </style>
+</head>
+<body>
+    <h1 id = "title">Tic Tac Toe!</h1>
+    <div class= "info" id ="turn"></div>
+    <div class = "container">
+        <script>
+            const NUM_SQUARES = 9;
+            for (i=0; i<NUM_SQUARES; i++)
+            {
+            id = "sq"+i;
+            document.write( "<div class='square' id='" + id + "'></div>" );
+            }
+        </script>
+    </div>
+    <div class ="info" id ="results"></div>
+    <div id = buttonContainer>
+        <input type = 'button' id = 'clear' value = "CLEAR">
+    </div>
+
+    <script>
+        
+        squares = document.getElementsByClassName('square')
+        Xturn = 1
+
+        //adds click functionality to all squares
+        for (i = 0; i <squares.length; i++)
+            {
+                squares[i].addEventListener("click",clicked)
+            }
+
+        //clears board and randomly decides who goes first
+        function startGame()
+        {
+            for (i = 0; i < squares.length; i++)
+            {
+                squares[i].innerHTML = ""
+            }
+            Xturn = Math.random()
+            if (Xturn > 0.5)
+            {
+                document.getElementById("turn").innerHTML = "X Players Turn";
+            }
+            else
+            {
+                document.getElementById("turn").innerHTML = "O Players Turn";
+            }
+        }
+
+
+        window.onload = function() 
+        {
+           startGame()
+           btn = document.getElementById('clear')
+           btn.onclick = startGame
+        }
+
+
+        //defines what happens when a square is clicked
+        function clicked(event)
+        {
+            id = ((event.target.id).toString())
+            alert("this is square " + id.charAt(2))
+
+            if(Xturn > 0.5 && event.target.innerHTML == "")
+            {
+                event.target.innerHTML = "X";
+                Xturn = 0;
+                document.getElementById("turn").innerHTML = "O Players Turn";
+            }
+
+            else if (Xturn < 0.5 && event.target.innerHTML == "")
+            {
+                event.target.innerHTML = "O";
+                Xturn = 1;
+                document.getElementById("turn").innerHTML = "X Players Turn";
+            }
+        }
+    </script>
+</body>
+</html>
